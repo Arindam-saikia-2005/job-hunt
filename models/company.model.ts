@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, Types } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
 interface ICompany  {
   _id:Types.ObjectId;
@@ -9,12 +9,10 @@ interface ICompany  {
 }
 
 const companySchema = new Schema<ICompany>({
-  _id:{
-    type:mongoose.Schema.Types.ObjectId
-  },
   recruiterId:{
     type:mongoose.Schema.Types.ObjectId,
-    ref:"User"
+    ref:"User",
+    required:true
   },
   name:{
     type:String,
@@ -30,4 +28,4 @@ const companySchema = new Schema<ICompany>({
 })
 
 
-export const Company = model<ICompany>("Company",companySchema);
+export const Company = mongoose.models?.Company || mongoose.model<ICompany>("Company",companySchema);

@@ -1,11 +1,11 @@
-import mongoose, { model, Schema, Types } from "mongoose"
+import mongoose, { Schema, Types } from "mongoose"
 
 interface IJob {
     _id: Types.ObjectId;
     recruiterId: Types.ObjectId;
     title: string;
     description: string;
-    skills: [];
+    skills: string[];
     salary: string | number;
     location: string;
     experince: string | number;
@@ -13,12 +13,10 @@ interface IJob {
 }
 
 const jobSchema = new Schema<IJob>({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId
-    },
     recruiterId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required:true
     },
     title: {
         type: String,
@@ -48,4 +46,4 @@ const jobSchema = new Schema<IJob>({
     }
 })
 
-export const Job = model<IJob>("Job", jobSchema);
+export const Job = mongoose.models?.Job || mongoose.model<IJob>("Job", jobSchema);

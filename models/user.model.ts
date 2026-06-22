@@ -1,6 +1,6 @@
-import mongoose, { model, Schema, Types } from "mongoose";
+import  mongoose, { Schema, Types } from "mongoose";
 
-type Roles = "CANDIDATE" | "ADMIN" | "RECURITER"
+type Roles = "CANDIDATE" | "ADMIN" | "RECRUITER"
 
 
 interface IUser {
@@ -8,14 +8,12 @@ interface IUser {
     name: string;
     email: string;
     password: string;
+    resume?:string;
     role: Roles;
-    skills: []
+    skills?: string[]
 }
 
 const userSchema = new Schema<IUser>({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId
-    },
     name: {
         type: String,
         required: true
@@ -29,9 +27,14 @@ const userSchema = new Schema<IUser>({
         type: String,
         required: true
     },
+    resume:{
+     type:String,
+     default:"",
+    },
     role: {
         type: String,
-        enum: ["CANDIDATE", "ADMIN", "RECURITER"]
+        enum: ["CANDIDATE", "ADMIN", "RECRUITER"],
+        default:"CANDIDATE"
     },
     skills: [{
         type: String,
@@ -39,7 +42,7 @@ const userSchema = new Schema<IUser>({
     }]
 })
 
-export const User = model<IUser>("User", userSchema)
+export const User = mongoose.models?.User ||  mongoose.model<IUser>("User", userSchema)
 
 
 
