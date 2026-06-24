@@ -32,10 +32,11 @@ export async function POST(req: NextRequest) {
             salary,
             location,
             experince,
-            jobType
+            jobType,
+            status:"PENDING"
         })
 
-        return NextResponse.json({ success: true, msg: "Job Created successfully" }, { status: 201 });
+        return NextResponse.json({ success: true, newJob }, { status: 201 });
     } catch (err: any) {
         console.error("Error while creating a job", err.message);
         return NextResponse.json({ msg: "Internal server error" }, { status: 500 })

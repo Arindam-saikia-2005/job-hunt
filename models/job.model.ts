@@ -10,13 +10,14 @@ interface IJob {
     location: string;
     experince?: string | number;
     jobType: string;
+    status: "PENDING" | "APPROVED" | "REJECTED";
 }
 
 const jobSchema = new Schema<IJob>({
     recruiterId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required:true
+        required: true
     },
     title: {
         type: String,
@@ -43,6 +44,12 @@ const jobSchema = new Schema<IJob>({
     },
     jobType: {
         type: String
+    },
+    status: {
+        type: String,
+        enum: ["PENDING", "APPROVED", "REJECTED"],
+        default: "PENDING"
+
     }
 })
 
