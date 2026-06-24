@@ -8,7 +8,7 @@ interface IJob {
     skills: string[];
     salary: string | number;
     location: string;
-    experince: string | number;
+    experince?: string | number;
     jobType: string;
 }
 
