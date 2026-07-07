@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
         const alreadyExist = await User.findOne({ email });
 
-        if (alreadyExist) return NextResponse.json({ msg: "User already exist" }, {
+        if (alreadyExist) return NextResponse.json({ success: false, msg: "User already exist" }, {
             status: 400
         });
 
@@ -25,9 +25,15 @@ export async function POST(req: NextRequest) {
             password: hashPassword
         });
 
-        await newUser.save();
 
-        NextResponse.json({ newUser }, { status: 201 })
+        return NextResponse.json({
+            success: true, user: {
+                id: newUser._id,
+                name: newUser.name,
+                email: newUser.email,
+                role: newUser.role
+            }
+        }, { status: 201 })
     } catch (error: any) {
         console.log("Error while registering an user", error.message);
         return NextResponse.json({

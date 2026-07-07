@@ -5,7 +5,7 @@ interface IJob {
     recruiterId: Types.ObjectId;
     title: string;
     description: string;
-    skills: string[];
+    skills: string;
     salary: string | number;
     location: string;
     experince?: string | number;
@@ -27,10 +27,10 @@ const jobSchema = new Schema<IJob>({
         type: String,
         required: true
     },
-    skills: [{
-        type: String,
-        required: true
-    }],
+    skills:{
+      type:String,
+      required:true
+    },
     salary: {
         type: String,
         required: true

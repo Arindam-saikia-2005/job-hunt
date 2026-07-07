@@ -5,7 +5,8 @@ interface ICompany  {
   recruiterId:Types.ObjectId;
   name:string;
   description:string;
-  website:string;
+  website?:string;
+  logo?:string;
 }
 
 const companySchema = new Schema<ICompany>({
@@ -23,6 +24,9 @@ const companySchema = new Schema<ICompany>({
     required:true
   },
   website:{
+    type:String
+  },
+  logo:{
     type:String
   }
 })
