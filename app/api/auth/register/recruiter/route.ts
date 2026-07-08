@@ -9,7 +9,19 @@ export async function POST(req: NextRequest) {
     await dbConnect();
     try {
         const body = await req.json();
-        const { name, email, password } = userSchema.parse(body);
+        const result = userSchema.safeParse(body);
+
+        if (!result.success) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    errors: result.error.flatten().fieldErrors,
+                },
+                { status: 400 }
+            );
+        }
+
+        const { name, email, password } = result.data;
 
         const alreadyExist = await User.findOne({ email });
 
